@@ -280,6 +280,11 @@ case "$1" in
             chown $LAVA_SYS_USER:adm /var/log/lava-server/django.log
         fi
 
+        # generate master key for V2 ZMQ authentication and encryption.
+        if [ -x /usr/share/lava-dispatcher/create_certificate.py && ! -f /etc/lava-dispatcher/certificates.d/master.key_secret ]; then
+            /usr/share/lava-dispatcher/create_certificate.py --directory /etc/lava-dispatcher/certificates.d --name master
+        fi
+
         # allow reinstalls when the user has not been removed.
         if [ ! -d $LAVA_SYS_HOME/ ]; then
             mkdir -p $LAVA_SYS_HOME/
