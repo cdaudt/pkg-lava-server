@@ -281,7 +281,7 @@ case "$1" in
         fi
 
         # generate master key for V2 ZMQ authentication and encryption.
-        if [ -x /usr/share/lava-dispatcher/create_certificate.py && ! -f /etc/lava-dispatcher/certificates.d/master.key_secret ]; then
+        if [ -x /usr/share/lava-dispatcher/create_certificate.py ] && [ ! -f /etc/lava-dispatcher/certificates.d/master.key_secret ]; then
             /usr/share/lava-dispatcher/create_certificate.py --directory /etc/lava-dispatcher/certificates.d --name master
         fi
 
