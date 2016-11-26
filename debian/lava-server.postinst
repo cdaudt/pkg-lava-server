@@ -25,6 +25,8 @@ LAVA_SYS_MOUNTDIR="/var/lib/lava-server/default"
 master_config() {
     db_get lava-server/instance-name
     LAVA_INSTANCE=$RET
+    db_get lava-server/db-server
+    LAVA_DB_SERVER=$RET
 
     if [ "$LAVA_DB_NAME" = '$LAVA_DB_NAME' ]
     then
@@ -38,6 +40,10 @@ master_config() {
     then
       LAVA_DB_PORT=5432
     fi
+    if [ "$LAVA_DB_SERVER" = '$LAVA_DB_SERVER' ]
+    then
+      LAVA_DB_SERVER="localhost"
+    fi
     if [ "$LAVA_DB_PASSWORD" = '$LAVA_DB_PASSWORD' ]
     then
       LAVA_DB_PASSWORD=`env LANG=C LC_ALL=C tr -dc "[:alnum:]" < /dev/urandom | dd bs=1 count=12 2>/dev/null`
@@ -47,6 +53,10 @@ master_config() {
     if [ "$LAVA_DB_PORT" = '' ]
     then
       LAVA_DB_PORT=5432
+    fi
+    if [ "$LAVA_DB_SERVER" = '' ]
+    then
+      LAVA_DB_SERVER="localhost"
     fi
     if [ "$LAVA_PREFIX" = '' ]
     then
@@ -73,7 +83,7 @@ LAVA_DEV_MODE="$LAVA_DEV_MODE"
 # PostgreSQL configuration
 LAVA_DB_NAME="$LAVA_DB_NAME"
 LAVA_DB_USER="$LAVA_DB_USER"
-LAVA_DB_SERVER="localhost"
+LAVA_DB_SERVER="$LAVA_DB_SERVER"
 LAVA_DB_PORT="$LAVA_DB_PORT"
 LAVA_DB_PASSWORD="$LAVA_DB_PASSWORD"
 # Scheduler configuration

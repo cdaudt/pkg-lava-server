@@ -16,6 +16,12 @@ Default: 5432
 _Description: Port number of the PostgreSQL database:
  Please enter the port number for the PostgreSQL database.
 
+Template: lava-server/db-server
+Type: string
+Default: localhost
+_Description: Hostname of the PostgreSQL database server:
+ Please enter the hostname for the PostgreSQL database server.
+
 Template: lava-server/worker-note
 Type: note
 _Description: This install looks like a remote worker
