@@ -284,7 +284,15 @@ case "$1" in
             fi
         else
             # install database only on the master
-            install_database
+            # And only if DBhost==localhost
+            # TODO: Convert this to its own debconf instead of mooching off of db-server
+
+            db_get lava-server/db-server
+            LAVA_DB_SERVER=$RET
+            if [ "$LAVA_DB_SERVER" = "localhost" ]
+            then
+                install_database
+            fi
             # Allow lavaserver to write to all the log files
             touch /var/log/lava-server/django.log
             chown $LAVA_SYS_USER:adm /var/log/lava-server/django.log
